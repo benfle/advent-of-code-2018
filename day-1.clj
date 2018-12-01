@@ -31,8 +31,7 @@
   Beware! Might not return for some change lists."
   [frequency-change-list]
   (->> frequency-change-list
-       repeat
-       (sequence cat)
+       cycle
        (reductions + 0)
        (keep (duplicate?))
        first))
@@ -47,4 +46,4 @@
   (assert (= (first-frequency-reached-twice change-list)
              freq)))
 
-(first-frequency-reached-twice (frequency-change-list))
+(time (first-frequency-reached-twice (frequency-change-list)))
