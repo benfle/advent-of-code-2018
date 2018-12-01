@@ -13,16 +13,18 @@
 
 ;; Part Two
 
-(defn duplicate?
-  "A stateful predicate to keep duplicates in a sequence."
+(defn duplicates
+  "A stateful transducer to only return duplicates in a sequence."
   []
-  (let [seen (volatile! #{})]
-    (fn [input]
-      (if (contains? @seen input)
-        input
-        (do
-          (vswap! seen conj input)
-          nil)))))
+  (fn [xf]
+    (let [seen (volatile! #{})]
+      (fn
+        ([] (xf))
+        ([result] (xf result))
+        ([result input]
+         (if (contains? @seen input)
+           (xf result input)
+           (vswap! seen conj input)))))))
 
 (defn first-frequency-reached-twice
   "The first frequency reached twice when repeatedly applying
@@ -33,7 +35,7 @@
   (->> frequency-change-list
        cycle
        (reductions + 0)
-       (keep (duplicate?))
+       (sequence (duplicates))
        first))
 
 (def tests
