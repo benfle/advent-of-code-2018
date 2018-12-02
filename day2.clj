@@ -1,6 +1,5 @@
 (ns day2
   (:require [clojure.java.io :refer [reader]]
-            [clojure.data :refer [diff]]
             [clojure.set :refer [map-invert]]
             [day1]))
 
