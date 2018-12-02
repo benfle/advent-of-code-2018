@@ -55,7 +55,7 @@
       :else         (recur t1 t2 true))))
 
 (defn similar-box-ids
-  "A seq of seq of similar box ids."
+  "A set of set of similar box ids."
   [box-ids]
   (loop [[head & tail] box-ids
          res #{}]
