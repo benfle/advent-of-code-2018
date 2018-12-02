@@ -1,8 +1,8 @@
-(ns day-1)
+(ns day1)
 
 (defn frequency-change-list
   []
-  (with-open [rdr (clojure.java.io/reader "day-1.txt")]
+  (with-open [rdr (clojure.java.io/reader "day1.txt")]
     (->> rdr
          line-seq
          (mapv #(Integer/parseInt %)))))
