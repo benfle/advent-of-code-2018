@@ -1,7 +1,8 @@
 (ns day2
   (:require [clojure.java.io :refer [reader]]
             [clojure.data :refer [diff]]
-            [clojure.set :refer [map-invert]]))
+            [clojure.set :refer [map-invert]]
+            [day1]))
 
 ;; Part One
 
@@ -42,40 +43,19 @@
 
 ;; Part Two
 
-(defn similar?
-  "Whether the two box ids differ by exactly 1 character."
-  [s1 s2]
-  (loop [[h1 & t1] (seq s1)
-         [h2 & t2] (seq s2)
-         different? false]
-    (cond
-      (= h1 h2 nil) different?
-      (= h1 h2)     (recur t1 t2 different?)
-      different?    false
-      :else         (recur t1 t2 true))))
-
-(defn similar-box-ids
-  "A set of set of similar box ids."
-  [box-ids]
-  (loop [[head & tail] box-ids
-         res #{}]
-    (if-not head
-      res
-      (recur tail
-             (if-let [similars (->> tail
-                                    (filter #(similar? % head))
-                                    seq)]
-               (conj res (set (into [head] similars)))
-               res)))))
+(defn delete-char-at
+  [s idx]
+  (str (subs s 0 idx)
+       (subs s (inc idx))))
 
 (defn common-letters
-  [similar-box-ids]
-  (->> similar-box-ids
-       (map seq)
-       (apply diff)
-       last
-       (remove nil?)
-       (apply str)))
+  [box-ids]
+  (some (fn [idx]
+          (->> box-ids
+               (map #(delete-char-at % idx))
+               (sequence (day1/duplicates))
+               first))
+        (range)))
 
 (def test-box-ids
   ["abcde"
@@ -86,9 +66,7 @@
    "axcye"
    "wvxyz"])
 
-(assert (= #{#{"fguij" "fghij"}}
-           (similar-box-ids test-box-ids)))
+(assert (= "fgij"
+           (common-letters test-box-ids)))
 
-(similar-box-ids (box-ids))
-
-(common-letters (first (similar-box-ids (box-ids))))
+(common-letters (box-ids))
