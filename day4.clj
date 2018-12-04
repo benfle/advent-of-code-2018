@@ -88,7 +88,10 @@
        (sequence (records->schedules))
        by-guard
        (mapcat (fn [[id schedules]]
-                 (map #(apply vector id %) (->> schedules (apply concat) frequencies))))
+                 (->> schedules
+                      (apply concat)
+                      frequencies
+                      (map #(apply vector id %)))))
        (sort-by last)
        last))
 
