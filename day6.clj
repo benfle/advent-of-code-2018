@@ -1,6 +1,8 @@
 (ns day6
   (:require [clojure.java.io :refer [reader]]))
 
+(set! *unchecked-math* :warn-on-boxed)
+
 ;; input format: <x>, <y>
 
 (defn parse-coordinates
@@ -20,8 +22,8 @@
 
 (defn manhattan-distance
   [p1 p2]
-  (+ (Math/abs (- (:x p1) (:x p2)))
-     (Math/abs (- (:y p1) (:y p2)))))
+  (+ (Math/abs (- ^long (:x p1) ^long (:x p2)))
+     (Math/abs (- ^long (:y p1) ^long (:y p2)))))
 
 (defn closest
   "Return the point closest to p or nil if equidistant."
@@ -51,9 +53,10 @@
 (defn box-points
   "A seq of the points in the box."
   [{:keys [origin corner]}]
-  (for [x (range (:x origin) (inc (:x corner)))
-        y (range (:y origin) (inc (:y corner)))]
-    {:x x :y y}))
+  (for [x (range (:x origin) (inc ^long (:x corner)))
+        y (range (:y origin) (inc ^long (:y corner)))]
+    {:x x
+     :y y}))
 
 (defn distance-map
   [distance box coordinates]
@@ -91,8 +94,8 @@
   (->> coordinates
        bounding-box
        box-points
-       (filter #(< (reduce + (map (partial distance %) coordinates))
-                   max-distance))
+       (filter #(< ^long (reduce + (map (partial distance %) coordinates))
+                   ^long max-distance))
        count))
 
 (assert (= 16
