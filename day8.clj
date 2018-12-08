@@ -1,6 +1,5 @@
 (ns day8
-  (:require [clojure.string :as str]
-            [clojure.zip :as zip]))
+  (:require [clojure.string :as str]))
 
 (def license (->> (str/split (slurp "day8.txt") #"\s")
                   (mapv #(Integer/parseInt %))))
