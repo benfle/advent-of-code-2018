@@ -64,8 +64,6 @@
   [game]
   (apply max-key val (:scores (play game))))
 
-(:scores (play {:players  9 :marbles   25}))
-
 (time (assert (=     32 (second (high-score {:players  9 :marbles   25})))))
 (time (assert (=   8317 (second (high-score {:players 10 :marbles 1618})))))
 (time (assert (= 146373 (second (high-score {:players 13 :marbles 7999})))))
@@ -73,8 +71,8 @@
 (time (assert (=  54718 (second (high-score {:players 21 :marbles 6111})))))
 (time (assert (=  37305 (second (high-score {:players 30 :marbles 5807})))))
 
-(time (high-score {:players 459 :marbles 71790})) ; 200 msecs
+(time (high-score {:players 459 :marbles 71790})) ; 50 msecs
 
 ;; Part Two
 
-(time (high-score {:players 459 :marbles 7179000})) ; 17 s
+(time (high-score {:players 459 :marbles 7179000})) ; 7 s
