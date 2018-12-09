@@ -1,5 +1,4 @@
-(ns day9-alt
-  (:require [clojure.zip :as zip]))
+(ns day9-alt)
 
 ;; a poor man ring zipper
 
