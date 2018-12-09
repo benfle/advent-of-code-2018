@@ -1,5 +1,5 @@
 (ns day9-alt2
-  (:import [java.util LinkedList Deque HashMap]))
+  (:import [java.util LinkedList Deque]))
 
 (set! *warn-on-reflection* true)
 
