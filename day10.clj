@@ -19,10 +19,6 @@
   [{:keys [velocity] :as point}]
   (update point :position #(merge-with + % velocity)))
 
-(defn positions
-  [point]
-  (iterate next-point point))
-
 (defn bounding-box
   [points]
   (let [positions (map :position points)]
